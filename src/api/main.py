@@ -14,6 +14,13 @@ from src.api.routers import (
     backtest_router,
     portfolio_router,
 )
+from src.api.errors import (
+    validation_exception_handler,
+    type_exception_handler,
+    api_exception_handler,
+    generic_exception_handler,
+    APIError
+)
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -27,6 +34,12 @@ app = FastAPI(
 # Setup middleware
 setup_middleware(app)
 
+# Register exception handlers
+app.add_exception_handler(ValueError, validation_exception_handler)
+app.add_exception_handler(TypeError, type_exception_handler)
+app.add_exception_handler(APIError, api_exception_handler)
+app.add_exception_handler(Exception, generic_exception_handler)
+
 # Include routers
 app.include_router(health_router)
 app.include_router(data_router)
@@ -36,7 +49,7 @@ app.include_router(arima_router)
 app.include_router(backtest_router)
 app.include_router(portfolio_router)
 
-logger.info("Market Risk VaR API initialized successfully")
+logger.info("Market Risk VaR API initialized successfully with security enhancements")
 
 
 def start_server():

@@ -42,11 +42,27 @@ class Settings:
     )
 
     # API Security
-    API_SECRET_KEY: str = os.getenv("API_SECRET_KEY", "dev-secret-key-change-in-production")
+    API_SECRET_KEY: str = os.getenv("API_SECRET_KEY", "")
     API_ALGORITHM: str = os.getenv("API_ALGORITHM", "HS256")
     API_ACCESS_TOKEN_EXPIRE_MINUTES: int = int(
         os.getenv("API_ACCESS_TOKEN_EXPIRE_MINUTES", "30")
     )
+
+    @classmethod
+    def validate_production_settings(cls):
+        """Validate required settings in production environment."""
+        if cls.ENVIRONMENT == "production":
+            if not cls.API_SECRET_KEY or cls.API_SECRET_KEY == "":
+                raise ValueError(
+                    "API_SECRET_KEY must be set in production! "
+                    "Generate one with: python -c 'import secrets; print(secrets.token_urlsafe(32))'"
+                )
+            if len(cls.API_SECRET_KEY) < 32:
+                raise ValueError("API_SECRET_KEY must be at least 32 characters long")
+            if cls.DEBUG:
+                raise ValueError("DEBUG must be False in production")
+            if cls.SMTP_PASSWORD == "" and cls.ENABLE_SCHEDULER:
+                raise ValueError("SMTP_PASSWORD required when scheduler is enabled")
 
     # =============================================================================
     # LOGGING
@@ -151,3 +167,6 @@ settings = Settings()
 
 # Ensure directories exist
 settings.ensure_directories()
+
+# Validate production settings
+settings.validate_production_settings()

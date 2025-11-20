@@ -22,7 +22,26 @@ class VaRCalculator:
 
         Args:
             confidence_level: Confidence level (e.g., 0.95 for 95%, 0.99 for 99%)
+
+        Raises:
+            ValueError: If confidence_level is not between 0 and 1
         """
+        # Validate confidence level
+        if not isinstance(confidence_level, (int, float)):
+            raise TypeError(f"confidence_level must be numeric, got {type(confidence_level)}")
+
+        if not 0 < confidence_level < 1:
+            raise ValueError(
+                f"confidence_level must be between 0 and 1 (exclusive), got {confidence_level}"
+            )
+
+        # Warn if unusual confidence level
+        if confidence_level < 0.5 or confidence_level > 0.999:
+            logger.warning(
+                f"Unusual confidence level: {confidence_level}. "
+                f"Common values are 0.90, 0.95, or 0.99"
+            )
+
         self.confidence_level = confidence_level
         self.alpha = 1 - confidence_level
 
