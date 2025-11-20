@@ -29,7 +29,6 @@ import pickle
 import warnings
 
 warnings.filterwarnings('ignore')
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Try to import TensorFlow/Keras (optional dependency)

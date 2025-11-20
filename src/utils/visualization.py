@@ -11,7 +11,6 @@ from plotly.subplots import make_subplots
 from typing import Optional, List
 import logging
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

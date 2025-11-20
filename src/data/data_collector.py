@@ -9,7 +9,6 @@ from datetime import datetime, timedelta
 from typing import List, Optional
 import logging
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

@@ -26,7 +26,6 @@ from typing import Optional, List, Dict
 import pandas as pd
 import logging
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Create base class for ORM models

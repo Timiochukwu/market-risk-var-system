@@ -9,7 +9,6 @@ from scipy import stats
 from typing import Dict, Tuple, Optional
 import logging
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

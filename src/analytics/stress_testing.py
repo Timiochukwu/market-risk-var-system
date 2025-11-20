@@ -19,7 +19,6 @@ from typing import Dict, List, Tuple, Optional
 from scipy import stats
 import logging
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

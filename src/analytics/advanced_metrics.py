@@ -19,7 +19,6 @@ from scipy import stats
 import logging
 
 # Set up logging to track what the code is doing
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

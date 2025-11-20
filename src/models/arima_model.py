@@ -14,7 +14,6 @@ from typing import Tuple, Optional, Dict
 import pickle
 
 warnings.filterwarnings('ignore')
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
