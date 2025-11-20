@@ -8,21 +8,80 @@ import pandas as pd
 from datetime import datetime, timedelta
 from typing import List, Optional
 import logging
+import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 logger = logging.getLogger(__name__)
 
 
 class DataCollector:
-    """Collect market data for risk analysis"""
+    """Collect market data for risk analysis with connection pooling"""
 
-    def __init__(self, data_dir: str = "data/raw"):
+    def __init__(self, data_dir: str = "data/raw", max_retries: int = 3, pool_connections: int = 10, pool_maxsize: int = 20):
         """
-        Initialize data collector
+        Initialize data collector with connection pooling
 
         Args:
             data_dir: Directory to store raw data
+            max_retries: Maximum number of retry attempts for failed requests
+            pool_connections: Number of connection pools to cache
+            pool_maxsize: Maximum number of connections to save in the pool
         """
         self.data_dir = data_dir
+
+        # Create a session with connection pooling and retry logic
+        self.session = self._create_session(max_retries, pool_connections, pool_maxsize)
+
+        logger.info(
+            f"DataCollector initialized with connection pooling "
+            f"(connections={pool_connections}, maxsize={pool_maxsize}, retries={max_retries})"
+        )
+
+    def _create_session(self, max_retries: int, pool_connections: int, pool_maxsize: int) -> requests.Session:
+        """
+        Create a requests session with connection pooling and retry logic.
+
+        Args:
+            max_retries: Maximum number of retry attempts
+            pool_connections: Number of connection pools
+            pool_maxsize: Maximum connections per pool
+
+        Returns:
+            Configured requests.Session object
+        """
+        session = requests.Session()
+
+        # Configure retry strategy
+        retry_strategy = Retry(
+            total=max_retries,
+            backoff_factor=1,  # Wait 1s, 2s, 4s between retries
+            status_forcelist=[429, 500, 502, 503, 504],  # Retry on these HTTP status codes
+            allowed_methods=["HEAD", "GET", "OPTIONS"]  # Only retry safe methods
+        )
+
+        # Create HTTP adapter with retry strategy and connection pooling
+        adapter = HTTPAdapter(
+            max_retries=retry_strategy,
+            pool_connections=pool_connections,
+            pool_maxsize=pool_maxsize,
+            pool_block=False  # Don't block if pool is full, create new connection
+        )
+
+        # Mount adapter for both HTTP and HTTPS
+        session.mount("http://", adapter)
+        session.mount("https://", adapter)
+
+        # Set reasonable timeout (connect timeout, read timeout)
+        session.timeout = (10, 30)
+
+        return session
+
+    def __del__(self):
+        """Clean up session on deletion."""
+        if hasattr(self, 'session'):
+            self.session.close()
+            logger.debug("DataCollector session closed")
 
     def fetch_stock_data(
         self,
@@ -32,7 +91,7 @@ class DataCollector:
         period: str = "2y"
     ) -> pd.DataFrame:
         """
-        Fetch stock price data from Yahoo Finance
+        Fetch stock price data from Yahoo Finance using connection pooling
 
         Args:
             ticker: Stock ticker symbol (e.g., 'AAPL', 'MSFT')
@@ -46,10 +105,22 @@ class DataCollector:
         try:
             logger.info(f"Fetching data for {ticker}...")
 
+            # Use the pooled session for yfinance downloads
             if start_date and end_date:
-                data = yf.download(ticker, start=start_date, end=end_date, progress=False)
+                data = yf.download(
+                    ticker,
+                    start=start_date,
+                    end=end_date,
+                    progress=False,
+                    session=self.session  # Use pooled session
+                )
             else:
-                data = yf.download(ticker, period=period, progress=False)
+                data = yf.download(
+                    ticker,
+                    period=period,
+                    progress=False,
+                    session=self.session  # Use pooled session
+                )
 
             if data.empty:
                 logger.warning(f"No data retrieved for {ticker}")
@@ -130,7 +201,7 @@ class DataCollector:
 
     def get_latest_price(self, ticker: str) -> float:
         """
-        Get the latest price for a ticker
+        Get the latest price for a ticker using connection pooling
 
         Args:
             ticker: Ticker symbol
@@ -139,7 +210,8 @@ class DataCollector:
             Latest closing price
         """
         try:
-            stock = yf.Ticker(ticker)
+            # Create Ticker object with pooled session
+            stock = yf.Ticker(ticker, session=self.session)
             info = stock.history(period="1d")
             if not info.empty:
                 return info['Close'].iloc[-1]
