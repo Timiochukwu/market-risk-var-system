@@ -376,14 +376,19 @@ Upon completion, you will have:
 - [x] Day 003: Historical VaR
 - [x] Day 004: Parametric VaR
 - [x] Day 005: Monte Carlo VaR
+- [x] Day 006: ARIMA Stationarity Testing
+- [x] Day 007: ARIMA Forecasting
+- [x] Day 008: GARCH Volatility Basics
+- [x] Day 009: GARCH Forecasting & VaR
+- [x] Day 010: Model Selection & Visualization
 
 ### Coming Soon 🚧
-- [ ] Day 006: ARIMA Forecasting Part 1
-- [ ] Day 007: ARIMA Forecasting Part 2
-- [ ] Day 008: GARCH Volatility Part 1
-- [ ] Day 009: GARCH Volatility Part 2
-- [ ] Day 010: EGARCH & Model Selection
-- [ ] Days 011-050: (To be released)
+- [ ] Day 011: Backtesting Framework Part 1
+- [ ] Day 012: Kupiec POF Test
+- [ ] Day 013: Christoffersen Independence Test
+- [ ] Day 014: Basel Traffic Light System
+- [ ] Day 015: Advanced Risk Metrics
+- [ ] Days 016-050: (To be released)
 
 ---
 
