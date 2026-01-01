@@ -401,14 +401,19 @@ Upon completion, you will have:
 - [x] Day 028: PDF Report Generation
 - [x] Day 029: Advanced Email Scheduling
 - [x] Day 030: CI/CD & Deployment
+- [x] Day 031: Machine Learning VaR (LSTM)
+- [x] Day 032: Advanced Portfolio Optimization
+- [x] Day 033: Regulatory Reporting (Basel III)
+- [x] Day 034: Performance Tuning & Scaling
+- [x] Day 035: Security Hardening
 
 ### Coming Soon 🚧
-- [ ] Day 031: Machine Learning VaR (LSTM)
-- [ ] Day 032: Advanced Portfolio Optimization
-- [ ] Day 033: Regulatory Reporting (Basel III)
-- [ ] Day 034: Performance Tuning & Scaling
-- [ ] Day 035: Security Hardening
-- [ ] Days 036-050: (To be released)
+- [ ] Day 036: Advanced ML Models (GRU, Transformer)
+- [ ] Day 037: Real-time Streaming Data
+- [ ] Day 038: Microservices Architecture
+- [ ] Day 039: Kubernetes Deployment
+- [ ] Day 040: Monitoring & Observability
+- [ ] Days 041-050: (To be released)
 
 ---
 
@@ -451,5 +456,5 @@ Built with:
 ---
 
 **Last Updated**: 2026-01-01
-**Current Version**: Days 001-030 (Weeks 1-6 Complete - 60% of course!)
-**Next Release**: Days 031-035 (Week 7 - Coming Soon)
+**Current Version**: Days 001-035 (Weeks 1-7 Complete - 70% of course!)
+**Next Release**: Days 036-040 (Week 8 - Coming Soon)
