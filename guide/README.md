@@ -381,14 +381,24 @@ Upon completion, you will have:
 - [x] Day 008: GARCH Volatility Basics
 - [x] Day 009: GARCH Forecasting & VaR
 - [x] Day 010: Model Selection & Visualization
+- [x] Day 011: Backtesting Framework
+- [x] Day 012: Kupiec POF Test
+- [x] Day 013: Christoffersen Independence Test
+- [x] Day 014: Basel Traffic Light System
+- [x] Day 015: Advanced Risk Metrics
+- [x] Day 016: Portfolio VaR & Correlation
+- [x] Day 017: Stress Testing & Scenarios
+- [x] Day 018: Report Generation
+- [x] Day 019: Email Alerts
+- [x] Day 020: Task Scheduling
 
 ### Coming Soon 🚧
-- [ ] Day 011: Backtesting Framework Part 1
-- [ ] Day 012: Kupiec POF Test
-- [ ] Day 013: Christoffersen Independence Test
-- [ ] Day 014: Basel Traffic Light System
-- [ ] Day 015: Advanced Risk Metrics
-- [ ] Days 016-050: (To be released)
+- [ ] Day 021: Database Integration (SQLAlchemy)
+- [ ] Day 022: Historical VaR Storage
+- [ ] Day 023: Performance Optimization
+- [ ] Day 024: API Authentication
+- [ ] Day 025: Rate Limiting & Caching
+- [ ] Days 026-050: (To be released)
 
 ---
 
@@ -430,6 +440,6 @@ Built with:
 
 ---
 
-**Last Updated**: 2025-12-31
-**Current Version**: Days 001-005 (Week 1 Complete)
-**Next Release**: Days 006-010 (Coming Soon)
+**Last Updated**: 2026-01-01
+**Current Version**: Days 001-020 (Weeks 1-4 Complete)
+**Next Release**: Days 021-025 (Week 5 - Coming Soon)
